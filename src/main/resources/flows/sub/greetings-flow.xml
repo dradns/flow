@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+    <var name="imageInfo" class="com.gemerald.models.ImageInfo" />
+    <var name="userInfo" class="com.gemerald.models.UserInfo" />
+
+    <on-start>
+        <evaluate expression="registerHandler.initResult()"
+                  result="flowScope.resultPage" />
+        <evaluate expression="registerHandler.init()"
+            result="flowScope.registerModel" />
+    </on-start>
+
+    <view-state id="personal" view="flows/sub/sub-page1" model="userInfo">
+        <transition on="next" to="parse-image" />
+        <transition on="up" to="error_end" />
+        <on-exit>
+         <evaluate expression="registerHandler.addUserInfo(flowScope.registerModel, userInfo)"></evaluate>
+        </on-exit>
+    </view-state>
+
+    <action-state id="parse-image">
+        <evaluate expression="registerHandler.prepareResult(flowScope.registerModel, flowScope.resultPage)" />
+        <transition on="pick-up" to="greetings" />
+    </action-state>
+
+
+    <view-state id="greetings" view="flows/sub/sub-page2" model="flowScope.resultPage">
+        <transition on="up" to="error_end" />
+        <transition on="success" to="success_end" />
+    </view-state>
+
+    <end-state id="success_end"/>
+    <end-state id="error_end"/>
+
+</flow>

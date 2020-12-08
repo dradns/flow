@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head(title='Subflow Page 2')"></head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form method="post" th:object="${resultPage}">
+					<h1 th:text="${resultPage.greetings}"></h1>
+					<hr />
+					<a th:href="@{'~' + ${flowExecutionUrl} + '&_eventId_up'}" class="btn">OK</a>
+	
+					<div class="row">
+						<div class="col-md-6">
+							<p>
+								<img class="img-fluid"  th:src="${resultPage.imgSource}"/>
+							</p>
+							<button type="submit" class="btn" name="_eventId_success">Success</button>
+						</div>
+					</div>
+				</form>				
+			</div>
+		</div>
+	</div>
+	<script th:replace="fragments/scripts :: scripts"></script>
+</body>
+
+</html>
